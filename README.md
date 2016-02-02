@@ -2,6 +2,10 @@
 
 Dash is an assemblage of Flask, Socketio, Jinja, Plotly and boiler plate CSS and JS for easily creating data visualization web-apps with your Python data analysis backend.
 
+## This fork
+
+This fork is intended to port the code and examples to use offline plots.
+
 ## Getting Started
 Check out the four examples:
 - `$ python example-1-hello-world.py`
