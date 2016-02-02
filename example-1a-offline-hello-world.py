@@ -19,7 +19,7 @@ socketio = SocketIO(app)
 @app.route('/')
 def index():
     return render_template(
-        'runtime/{}/layouts/layout_single_column_and_controls.html'.format(name),
+        'layouts/layout_single_column_and_controls.html'.format(name),
         app_name=name)
 
 

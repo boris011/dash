@@ -11,8 +11,17 @@
     <script type="text/javascript" src="static/js/plotly.min.js"></script>
     <script>
         $(document).ready(function(){
-            console.log($("#myplot"));
-        };
+           var trace1 = {
+             x: [1999, 2000, 2001, 2002],
+             y: [10, 15, 13, 17],
+             type: 'scatter'
+           };
+           var data = [trace1];
+           var layout = {
+               title: 'Sales Growth'
+           }
+           Plotly.newPlot('myplot', data, layout);
+        });
     </script>
 
 </head>
