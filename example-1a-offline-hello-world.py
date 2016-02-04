@@ -5,14 +5,13 @@ import json
 import plotly
 import numpy as np
 
-import dash.utils as utils
-from dash.components import element as el
-from dash.components import graph
+# import dash.utils as utils
+# from dash.components import element as el
+# from dash.components import graph
 
 name = 'dash-1a-offline-hello-world'
 app = Flask(name)
 app.debug = True
-app.config['key'] = 'secret'
 socketio = SocketIO(app)
 
 
@@ -25,29 +24,22 @@ def index():
 
 @socketio.on('replot')
 def replot(app_state):
-    print(app_state)
+    print("app state" + str(app_state))
     frequency = float(app_state['frequency'])
     x = np.linspace(0, 2 * 3.14, 500)
     y = np.sin(frequency * x)
-    messages = [
-        {
-            'id': 'sine-wave',
-            'task': 'newPlot',
-            'data': [{
-                'x': x,
-                'y': y,
-            }],
-            'layout': {
-                'xaxis': {
-                    'range': [0, 2 * 3.14]
-                },
-                'title': app_state.get('title', '')
-            }
+    message = {
+        'data': [{
+            'x': x,
+            'y': y,
+        }],
+        'layout': {
+            'title': app_state.get('title', '')
         }
-    ]
-
-    emit('postMessage', json.dumps(messages,
-                                   cls=plotly.utils.PlotlyJSONEncoder))
+    }
+    json_message = json.dumps(message, cls=plotly.utils.PlotlyJSONEncoder)
+    print("message" + str(json_message))
+    emit('postMessage', json_message)
 
 
 if __name__ == '__main__':

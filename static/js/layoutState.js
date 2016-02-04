@@ -1,10 +1,26 @@
-$(document).ready(function(){
+var socket = io.connect(window.location.protocol + '//' + document.domain + ':' + location.port);
+
+$(document).ready(function() {
+
+    // Init plot
+    var trace1 = {
+      type: 'scatter'
+    };
+
+    var data = [trace1];
+    var layout = {
+        xaxis: {
+            range: [0, 2 * 3.14]
+        }
+    }
+
+    Plotly.newPlot('myplot', data, layout);
 
     // Record and send the state when inputs change
     $('input, select').each(function(i, obj) {
         if(obj.type==="checkbox" || obj.type==="radio"){
             $(obj).change(function(){
-                console.log(getState());
+                //console.log(getState());
                 sendState({}, {});
             });
         } else {
@@ -12,7 +28,7 @@ $(document).ready(function(){
                 if($(obj).hasClass("show-output")){
                     $('output[for='+obj.name+']')[0].value = obj.value;
                 }
-                console.log(getState());
+                //console.log(getState());
                 sendState({}, {});
             };
         }
@@ -45,5 +61,6 @@ function getState(payload) {
 function sendState(that, payload){
     var payload = payload || {};
     payload = getState(payload);
+
     socket.emit('replot', payload);
 }
